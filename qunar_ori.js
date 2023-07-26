@@ -1,5 +1,2876 @@
 (function(e) {
     var t = {
+        id: "38a3e8ac70e9aefcd73025326716b77e",
+        filename: "initNewClkObj.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        if (!window.newClkObj) {
+            window.newClkObj = {
+                nanachiClk: function() {}
+            }
+        }
+    }(t.exports, t, e);
+    e.____MODULES["38a3e8ac70e9aefcd73025326716b77e"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "86872605378bb90e75baf8c965514629",
+        filename: "hfUtils.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            function e(e, t, n) {
+                for (var r in e)
+                    if (e.hasOwnProperty(r))
+                        t.call(n || window, r, e[r])
+            }
+            var n = Array.prototype.forEach ? function(e, t) {
+                Array.prototype.forEach.call(e || [], t)
+            }
+            : function(e, t) {
+                for (var n = 0, r = e && e.length || 0; n < r; n++)
+                    t.call(window, e[n], n)
+            }
+            ;
+            var r = new function() {
+                var t = {
+                    "http://user.qunar.com": {
+                        "pay.qunar.com": "/user_proxy/"
+                    }
+                };
+                var r = {
+                    "http://user.qunar.com": "/user_proxy/"
+                };
+                this.httpsFilter = function(t) {
+                    function i(e) {
+                        return e.replace("http:", location.protocol)
+                    }
+                    var r;
+                    if (location.protocol === "https:") {
+                        try {
+                            switch (Object.prototype.toString.call(t)) {
+                            case "[object String]":
+                                return i(t);
+                            case "[object Object]":
+                                e(t, function(e, n) {
+                                    t[e] = i(n)
+                                });
+                                return t;
+                            case "[object Array]":
+                                n(t, function(e, n) {
+                                    t[n] = i(e)
+                                });
+                                return t;
+                            default:
+                                return t
+                            }
+                        } catch (s) {}
+                    }
+                    return t
+                }
+                ;
+                this.bindEvent = function(e, t, n) {
+                    if (!e) {
+                        return
+                    }
+                    if (e.addEventListener) {
+                        e.addEventListener(t, n, false)
+                    } else if (e.attachEvent) {
+                        e.attachEvent("on" + t, function() {
+                            n.apply(e, arguments)
+                        })
+                    } else {
+                        e["on" + t] = n
+                    }
+                }
+                ;
+                this.GA = {
+                    param: function(e) {
+                        var t = ["utmwv=0.1", "t=" + +(new Date), "utmsr=" + (screen.width + "*" + screen.height), "utmasr=" + (screen.availWidth + "*" + screen.availHeight), "utmr=" + encodeURIComponent(document.referrer || "-1"), "utmp=" + encodeURIComponent(window.location.href.toString()), "utmhn=" + encodeURIComponent(window.location.host.toString()), "s=" + encodeURIComponent(e || window["_ba_utm_s"] || null)];
+                        return t.join("&")
+                    },
+                    clk: function(e, t) {
+                        this.send("clk", e, t)
+                    },
+                    send: function(e, t, n) {
+                        var r = new Image
+                          , i = this.param(n);
+                        r.src = "//bc.qunar.com/" + (e || window["_ba_utm_l"] || "e") + "?" + i + "&a=" + encodeURIComponent(t || "")
+                    }
+                };
+                this.jsonpCall = function(e, t, n) {
+                    var r = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+                    var i = document.createElement("script");
+                    i.async = "false";
+                    i.defer = "false";
+                    var s = {};
+                    s.transportType = "JSONP";
+                    s.transport = i;
+                    s.transportKey = "callback_" + Math.ceil(Math.random() * 1e6);
+                    var o = n;
+                    if (undefined === window[s.transportKey] || null === window[s.transportKey]) {
+                        window[s.transportKey] = function(e) {
+                            o(e);
+                            if (r && i.parentNode) {
+                                r.removeChild(i)
+                            }
+                            window[s.transportKey] = null;
+                            if (!!window[s.transportKey]) {
+                                delete window[s.transportKey]
+                            }
+                        }
+                    }
+                    i.onload = i.onreadystatechange = function() {
+                        if (!i.readyState || /loaded|complete/.test(i.readyState)) {
+                            if (s.timeoutId) {
+                                try {
+                                    clearTimeout(s.timeoutId)
+                                } catch (e) {}
+                            }
+                            i.onload = i.onreadystatechange = null;
+                            i.responseText = "";
+                            i = undefined;
+                            s.transport = null
+                        }
+                    }
+                    ;
+                    t += t ? "&" : "";
+                    t += "callback=" + s.transportKey + "&" + (new Date).getTime();
+                    i.src = e + "?" + t;
+                    if (r.firstChild) {
+                        r.insertBefore(i, r.firstChild)
+                    } else {
+                        r.appendChild(i)
+                    }
+                }
+                ;
+                this.contains = function(e, t) {
+                    if (document.documentElement.contains) {
+                        return e !== t && (e.contains ? e.contains(t) : true)
+                    } else if (document.documentElement.compareDocumentPosition) {
+                        return !!(e.compareDocumentPosition(t) & 16)
+                    } else {
+                        return false
+                    }
+                }
+                ;
+                this.hasClass = function(e, t) {
+                    return (new RegExp("(\\s|^)" + t + "(\\s|$)")).test(e.className)
+                }
+                ;
+                this.removeClass = function(e, t) {
+                    var n = [];
+                    if (typeof t == "string") {
+                        n.push(t)
+                    } else {
+                        n = t || n
+                    }
+                    var r = e.className.split(" ");
+                    var i = [], s;
+                    for (var o = 0; o < r.length; o++) {
+                        s = false;
+                        for (var u = 0; u < n.length; u++) {
+                            if (this.trim(r[o]) == n[u]) {
+                                s = true;
+                                break
+                            }
+                        }
+                        if (!s) {
+                            i.push(this.trim(r[o]))
+                        }
+                    }
+                    e.className = i.join(" ")
+                }
+                ;
+                this.addClass = function(e, t) {
+                    if (!e) {
+                        throw new Error("dom not exist when addClass:" + t)
+                    }
+                    var n = [];
+                    if (typeof t == "string") {
+                        n.push(t)
+                    } else {
+                        n = t || n
+                    }
+                    var r = e.className.split(" ");
+                    var i = [], s;
+                    for (var o = 0; o < n.length; o++) {
+                        s = false;
+                        for (var u = 0; u < r.length; u++) {
+                            if (this.trim(r[u]) == n[o]) {
+                                s = true;
+                                break
+                            }
+                        }
+                        if (!s) {
+                            i.push(this.trim(n[o]))
+                        }
+                    }
+                    e.className = e.className + " " + i.join(" ")
+                }
+                ;
+                this.trim = function(e) {
+                    if ("undefined" == typeof e) {
+                        return ""
+                    }
+                    e = e.toString();
+                    if (e.length === 0) {
+                        return ""
+                    }
+                    var t = [];
+                    t[" "] = true;
+                    t["	"] = true;
+                    t["\r"] = true;
+                    t["\n"] = true;
+                    while (e.length > 0 && t[e.substr(0, 1)]) {
+                        e = e.substr(1)
+                    }
+                    while (e.length > 0 && t[e.substr(e.length - 1, 1)]) {
+                        e = e.substr(0, e.length - 1)
+                    }
+                    return e
+                }
+                ;
+                this.insertAfter = function(e, t) {
+                    var n = t.parentNode;
+                    if (n.lastChild == t) {
+                        n.appendChild(e)
+                    } else {
+                        n.insertBefore(e, t.nextSibling)
+                    }
+                }
+                ;
+                this.getElementsByClassName = function(e, t) {
+                    if (e.getElementsByClassName) {
+                        return e.getElementsByClassName(t)
+                    } else {
+                        return function(t, n) {
+                            if (n == null)
+                                n = document;
+                            var r = [], i = n.getElementsByTagName("*"), s = i.length, o = new RegExp("(^|\\s)" + t + "(\\s|$)"), u, a;
+                            for (u = 0,
+                            a = 0; u < s; u++) {
+                                if (o.test(i[u].className)) {
+                                    r[a] = i[u];
+                                    a++
+                                }
+                            }
+                            return r
+                        }(t, e)
+                    }
+                }
+                ;
+                this.setCookie = function(e, t) {
+                    var n = new Date;
+                    var r = arguments
+                      , i = r.length;
+                    var s = i > 2 ? r[2] : null;
+                    var o = i > 3 ? r[3] : null;
+                    var u = i > 4 ? r[4] : null;
+                    var a = i > 5 ? r[5] : false;
+                    if (s != null)
+                        n.setTime(n.getTime() + s * 1e3);
+                    document.cookie = e + "=" + escape(t) + (s == null ? "" : "; expires=" + n.toGMTString()) + (o == null ? "" : "; path=" + o) + (u == null ? "" : "; domain=" + u) + (a == true ? "; secure" : "")
+                }
+                ;
+                this.setCookieEncode = function(e, t) {
+                    var n = new Date;
+                    var r = arguments
+                      , i = r.length;
+                    var s = i > 2 ? r[2] : null;
+                    var o = i > 3 ? r[3] : null;
+                    var u = i > 4 ? r[4] : null;
+                    var a = i > 5 ? r[5] : false;
+                    if (s != null)
+                        n.setTime(n.getTime() + s * 1e3);
+                    document.cookie = e + "=" + encodeURIComponent(t) + (s == null ? "" : "; expires=" + n.toGMTString()) + (o == null ? "" : "; path=" + o) + (u == null ? "" : "; domain=" + u) + (a == true ? "; secure" : "")
+                }
+                ;
+                this.setCookieNoEscape = function(e, t) {
+                    var n = new Date;
+                    var r = arguments
+                      , i = r.length;
+                    var s = i > 2 ? r[2] : null;
+                    var o = i > 3 ? r[3] : null;
+                    var u = i > 4 ? r[4] : null;
+                    var a = i > 5 ? r[5] : false;
+                    if (s != null)
+                        n.setTime(n.getTime() + s * 1e3);
+                    document.cookie = e + "=" + t + (s == null ? "" : "; expires=" + n.toGMTString()) + (o == null ? "" : "; path=" + o) + (u == null ? "" : "; domain=" + u) + (a == true ? "; secure" : "")
+                }
+                ;
+                this.getCookie = function(e) {
+                    var t = document.cookie.match(new RegExp("(^| )" + e + "=([^;]*)(;|$)"));
+                    if (t != null)
+                        return unescape(t[2]);
+                    return null
+                }
+                ;
+                this.extend = function(e) {
+                    e = e || {};
+                    for (var t = 1; t < arguments.length; t++) {
+                        if (!arguments[t])
+                            continue;
+                        for (var n in arguments[t]) {
+                            if (arguments[t].hasOwnProperty(n))
+                                e[n] = arguments[t][n]
+                        }
+                    }
+                    return e
+                }
+                ;
+                this.setNav = function(e) {
+                    if (!e)
+                        return;
+                    var t = this.getElementsByClassName(document.body, "qhf_" + e)[0];
+                    if (t) {
+                        this.addClass(t, "qhf_cur")
+                    }
+                }
+                ;
+                this.getRequest = function() {
+                    var e = location.search;
+                    var t = {};
+                    if (e.indexOf("?") !== -1) {
+                        var n = e.substr(1);
+                        strs = n.split("&");
+                        for (var r = 0; r < strs.length; r++) {
+                            if (strs[r].split("=")[1]) {
+                                t[strs[r].split("=")[0]] = strs[r].split("=")[1]
+                            }
+                        }
+                    }
+                    return t
+                }
+            }
+            ;
+            if (typeof QNR === "undefined") {
+                window["QNR"] = {}
+            }
+            window["QNR"]["hfUtils"] = r;
+            t.exports = r
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["86872605378bb90e75baf8c965514629"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "1fcb6cab1b9af8edd692babcb22c7447",
+        filename: "userstatus.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            var e = {
+                version: "1.1",
+                _COOKIEHASH: null,
+                $: function(e) {
+                    return document.getElementById(e)
+                },
+                _escapeHTML: function(e) {
+                    return String(e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/\//g, "&#x2F;").replace(/ /g, "&nbsp;")
+                },
+                _cookie: function(e) {
+                    this._COOKIEHASH = {};
+                    var t = document.cookie.split(";");
+                    for (var n = 0; n < t.length; n++) {
+                        var r = t[n];
+                        var i = r.split("=");
+                        if (r.indexOf("=") != -1)
+                            this._COOKIEHASH[this._trim(i[0])] = this._trim(i[1])
+                    }
+                    return this._COOKIEHASH[e]
+                },
+                _trim: function(e) {
+                    if (String.prototype.trim) {
+                        return e.trim()
+                    }
+                    return e.replace(/^\s+/, "").replace(/\s+$/, "")
+                },
+                _getinfo: function() {
+                    var e = {
+                        from: window["__qunarglobal_from"] || ""
+                    };
+                    var t = "";
+                    var n = "";
+                    var r = "";
+                    var i = this._cookie("QN16");
+                    var s = this._cookie("QN42");
+                    var o = this._cookie("QN15");
+                    if (typeof i !== "undefined") {
+                        switch (i) {
+                        case "1":
+                            t = this._getQunarNickName();
+                            n = this._getQunarNickName();
+                            r = this._getQunarUserName();
+                            break;
+                        case "0":
+                            t = s;
+                            n = o;
+                            r = o;
+                            break;
+                        default:
+                            t = this._getQunarNickName();
+                            n = this._getQunarNickName();
+                            r = this._getQunarUserName()
+                        }
+                    } else {
+                        t = this._getQunarNickName();
+                        n = this._getQunarNickName();
+                        r = this._getQunarUserName()
+                    }
+                    e.displayName = this._escapeHTML(decodeURIComponent(t).replace(/<(.*?)>/ig, "")).replace(/\"/g, "");
+                    e.username = decodeURIComponent(n).replace(/\"/g, "");
+                    e.uname = decodeURIComponent(r).replace(/\"/g, "");
+                    return e
+                },
+                _getQunarNickName: function() {
+                    var e = "";
+                    var t = this._cookie("_a");
+                    var n = this._cookie("QN42");
+                    if (!n) {
+                        n = this._cookie("_q");
+                        if (n) {
+                            n = n.replace("U.", "")
+                        }
+                    }
+                    if (n) {
+                        if (t) {
+                            e = this._trim(n + "(未激活)")
+                        } else {
+                            e = this._trim(n)
+                        }
+                    }
+                    return e
+                },
+                _getQunarUserName: function() {
+                    var e = "";
+                    var t = this._cookie("_q");
+                    var n = this._cookie("_a");
+                    if (t) {
+                        if (n) {
+                            e = this._trim(t.replace("U.", "") + "(未激活)")
+                        } else {
+                            e = this._trim(t.replace("U.", ""))
+                        }
+                    }
+                    return e
+                },
+                _run: function(e) {
+                    this.userNameEle = this.$(e["u"]);
+                    this.userTitleEle = this.$(e["t"]);
+                    this.userListEle = this.$(e["l"]);
+                    this.userRegEle = this.$(e["r"])
+                },
+                _html: function() {
+                    var e = arguments[0];
+                    var t = [];
+                    for (var n = 1, r = arguments.length; n < r; n++) {
+                        t.push(arguments[n])
+                    }
+                    e.innerHTML = t.join("")
+                }
+            };
+            var t = {
+                _regEvent: function() {
+                    var t = e.userTitleEle.className;
+                    e.userTitleEle.onmouseover = function() {
+                        e.userTitleEle.className = t + " q_header_tnav_menu_hover"
+                    }
+                    ;
+                    e.userTitleEle.onmouseout = function() {
+                        e.userTitleEle.className = t
+                    }
+                },
+                _isLogin: function() {
+                    if (e._cookie("_t") && e._cookie("_q") && e._cookie("_q").indexOf("G.") < 0) {
+                        return true
+                    } else if (e._cookie("QN42")) {
+                        return true
+                    } else {
+                        return false
+                    }
+                },
+                _render: function() {
+                    var n = e._getinfo();
+                    var r = encodeURIComponent(window.location.href);
+                    var i = "https://user.qunar.com";
+                    var s = e.userTitleEle ? e.userTitleEle.getAttribute("data-header-alwayshow") : false;
+                    var o = s && s === "true";
+                    if (t._isLogin()) {
+                        e._html(e.userNameEle, '<a href="', i, '/index.jsp#home" title="', n.displayName, '" hidefocus="on" class="q_header_uname" rel="nofollow" aria-label="进入个人中心">', n.displayName, "</a>");
+                        if (e.userListEle) {
+                            e.userTitleEle.style.display = "";
+                            var u = e.userListEle.getElementsByTagName("a");
+                            for (var a = 0, f = u.length; a < f; a++) {
+                                u[a].href = u[a].href.replace(/#\[\[username\]\]/g, n.uname)
+                            }
+                        }
+                        e._html(e.userRegEle, '<a id="__headerInfo_logout__" href="', i, "/passport/logout.jsp?ret=", r, '" hidefocus="on" rel="nofollow" class="q_header_logout">退出</a>');
+                        var l = document.getElementsByClassName("q_header_uname")[0];
+                        l.onclick = function() {
+                            newClkObj.nanachiClk({
+                                button_id: "13-7",
+                                button_name: "其他-用户名",
+                                action_type: "buttonclick",
+                                page_depth: "13-其他",
+                                to_url: this.href,
+                                logdata: ""
+                            })
+                        }
+                        ;
+                        var c = document.getElementById("__headerInfo_logout__");
+                        c.onclick = function() {
+                            newClkObj.nanachiClk({
+                                button_id: "13-8",
+                                button_name: "其他-退出登录",
+                                action_type: "buttonclick",
+                                page_depth: "13-其他",
+                                to_url: this.href,
+                                logdata: ""
+                            })
+                        }
+                    } else {
+                        e._html(e.userNameEle, '<span tabindex="-1">请</span><a id="__headerInfo_login__" href="', i, "/passport/login.jsp?ret=", r, '" hidefocus="on" rel="nofollow">登录</a>');
+                        e._html(e.userRegEle, '<span tabindex="-1">或</span><a id="__headerInfo_reg__" href="', i, "/passport/register.jsp?ret=", r, '" hidefocus="on" rel="nofollow">免费注册</a>');
+                        if (e.userListEle && !o) {
+                            e.userTitleEle.style.display = "none"
+                        }
+                        var h = document.getElementById("__headerInfo_login__");
+                        h.onclick = function() {
+                            newClkObj.nanachiClk({
+                                button_id: "13-1",
+                                button_name: "其他-登录",
+                                action_type: "buttonclick",
+                                page_depth: "13-其他",
+                                to_url: this.href,
+                                logdata: ""
+                            })
+                        }
+                        ;
+                        var p = document.getElementById("__headerInfo_reg__");
+                        p.onclick = function() {
+                            newClkObj.nanachiClk({
+                                button_id: "13-2",
+                                button_name: "其他-免费注册",
+                                action_type: "buttonclick",
+                                page_depth: "13-其他",
+                                to_url: this.href,
+                                logdata: ""
+                            })
+                        }
+                    }
+                },
+                _addItem: function(t, n) {
+                    var r = n || "";
+                    var i = document.createElement("DD");
+                    i.innerHTML = t;
+                    i.className = i.className + " " + r;
+                    e.userListEle.appendChild(i)
+                },
+                _getUserName: function() {
+                    if (!t._isLogin())
+                        return {};
+                    var n = e._getinfo();
+                    return {
+                        username: n.username,
+                        displayName: n.displayName,
+                        uname: n.uname
+                    }
+                },
+                _run: function(n) {
+                    e._run(n);
+                    t._render();
+                    if (e.userTitleEle) {
+                        t._regEvent()
+                    }
+                    t._checkCookieExpire();
+                    t._plantCsrfToken()
+                },
+                _checkCookieExpire: function() {
+                    if (!e._cookie("_t")) {
+                        return
+                    }
+                    var n = (new Date((e._cookie("_t") || 0) * 6e4)).getTime()
+                      , r = (new Date).getTime();
+                    if (n > r || r > n + 12096e5) {
+                        if (window.QNR && window.QNR.hfUtils) {
+                            window["___void"] = function() {
+                                try {
+                                    t._plantCsrfToken()
+                                } catch (e) {}
+                            }
+                            ;
+                            var i = document.createElement("script");
+                            var s = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+                            i.onload = i.onreadystatechange = function() {
+                                t._render();
+                                if (i.parentNode) {
+                                    s.removeChild(i)
+                                }
+                                return false
+                            }
+                            ;
+                            i.src = QNR.hfUtils.httpsFilter("http://user.qunar.com/webApi/forcelogout.jsp?format=js&callback=___void");
+                            if (s.firstChild) {
+                                s.insertBefore(i, s.firstChild)
+                            } else {
+                                s.appendChild(i)
+                            }
+                        }
+                        setTimeout(function() {
+                            t._render()
+                        }, 15e3)
+                    }
+                },
+                _plantCsrfToken: function() {
+                    var t = function(e) {
+                        var t = "123456789poiuytrewqasdfghjklmnbvcxzQWERTYUIPLKJHGFDSAZXCVBNM";
+                        var n = "";
+                        for (var r = 0; r < e; r++) {
+                            n += t.charAt(Math.ceil(Math.random() * 1e8) % t.length)
+                        }
+                        return n
+                    };
+                    var n = e._cookie("csrfToken");
+                    if (!n) {
+                        n = t(32);
+                        try {
+                            document.cookie = "csrfToken=" + n + ";domain=qunar.com;path=/;"
+                        } catch (r) {}
+                    }
+                },
+                _getFixNickName: function(e, n) {
+                    var r = t._getUserName().displayName || "";
+                    e = typeof e == "number" ? e : 7;
+                    return r.length > e ? r.substr(0, e) + (n || "...") : r
+                }
+            };
+            var n = {};
+            n["isLogin"] = t._isLogin;
+            n["render"] = t._render;
+            n["addItem"] = t._addItem;
+            n["getUserName"] = t._getUserName;
+            n["run"] = t._run;
+            n["getFixNickName"] = t._getFixNickName;
+            if (typeof QNR === "undefined") {
+                window["QNR"] = {}
+            }
+            QNR["QUstatus"] = n;
+            var r = function() {};
+            r.prototype = {
+                getQueryString: function(e, t) {
+                    try {
+                        var n = new RegExp("(^|&|\\?)" + t + "=([^&]*)(&|$)"), r;
+                        if (r = e.match(n)) {
+                            return unescape(r[2])
+                        }
+                        return null
+                    } catch (i) {
+                        return null
+                    }
+                },
+                setCookie: function(e, t, n, r, i) {
+                    var s = n + "=" + escape(r) + "; ";
+                    var o = "path=" + "/" + "; ";
+                    var u = "domain=" + e + ";";
+                    var a = s + o + u;
+                    if (i) {
+                        var f = new Date((new Date).getTime() + i * 36e5);
+                        var l = "expires=" + f.toGMTString() + "; ";
+                        a = a + l
+                    }
+                    document.cookie = a
+                },
+                init: function() {
+                    var e = window.location.search;
+                    var t = this.getQueryString(e, "ex_track");
+                    if (t && t.indexOf("bd_zhixin") === 0) {
+                        this.setCookie(".qunar.com", "/", "QN205", "bdzx")
+                    }
+                }
+            };
+            var i = new r;
+            i.init()
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["1fcb6cab1b9af8edd692babcb22c7447"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "e5921b50a3d3d91e99b0b2807c5fc360",
+        filename: "browser_upgrade.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            function r(e) {
+                return document.getElementById(e)
+            }
+            function s(e) {
+                var t = /(windows)/;
+                return t.test(e)
+            }
+            function o(e) {
+                function l(e) {
+                    var i = r.exec(e) || t.exec(e) || n.exec(e) || s.exec(e) || o.exec(e) || u.exec(e) || e.indexOf("compatible") < 0 && a.exec(e) || [];
+                    return {
+                        browser: i[1] || "",
+                        version: i[2] || "0"
+                    }
+                }
+                var t = /(chrome)[ \/](\d+)/
+                  , n = /(safari)/
+                  , r = /(360se|360ee)/
+                  , i = /(webkit)[ \/]([\w.]+)/
+                  , s = /(opera)(?:.*version)?[ \/]([\w.]+)/
+                  , o = /(msie) (\d+)/
+                  , u = /(firefox)[ \/](\d+)/
+                  , a = /(mozilla)(?:.*? rv:(\d+))?/
+                  , f = /netscape/;
+                browserMatch = l(e);
+                var c = {};
+                if (browserMatch.browser) {
+                    c[browserMatch.browser] = true;
+                    c.version = browserMatch.version
+                }
+                return c
+            }
+            function u() {
+                try {
+                    if (/maxthon/.test(i)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } catch (e) {
+                    return false
+                }
+            }
+            function a() {
+                try {
+                    var e = /(maxthon)[ \/](\d+)/.exec(i);
+                    if (e) {
+                        return e[2]
+                    } else {
+                        var t = window.external.max_version;
+                        var n = t.split(".")[0];
+                        if (n) {
+                            return n
+                        } else {
+                            return 0
+                        }
+                    }
+                } catch (r) {
+                    return 0
+                }
+            }
+            function f(e, t) {
+                if (/opera|the world|qqbrowser|tencenttraveler|theworld/.test(t)) {
+                    return 2
+                } else {
+                    var n = u();
+                    if (n) {
+                        var r = a();
+                        return r < 4 ? 1 : 0
+                    } else if (t.indexOf("se 2.x") > -1) {
+                        if (e.chrome) {
+                            return e.version < 18 ? 1 : 0
+                        } else if (/metasr/.test(t)) {
+                            return 0
+                        } else {
+                            return 1
+                        }
+                    } else if (e.msie) {
+                        return e.version <= 7 ? 1 : 0
+                    } else if (e.chrome) {
+                        return e.version < 18 ? 1 : 0
+                    } else if (e.firefox) {
+                        return e.version < 12 ? 1 : 0
+                    }
+                }
+                return 0
+            }
+            function l() {
+                if (d(e) == 1) {
+                    if (r(t)) {
+                        r(t).style.display = "none"
+                    }
+                    return
+                }
+                var n = o(i);
+                var u = f(n, i);
+                var a = s(i);
+                if (u === 1) {
+                    v("您目前的浏览器版本过低，可能导致网站部分功能无法正常使用，建议尽快升级您的浏览器")
+                } else if (u === 2) {
+                    if (a) {
+                        v('为保证您能顺畅体验去哪儿网的服务，建议改用 <a href = "http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" target="_blank" rel="nofollow">Internet Explorer</a>、<a href = "http://www.google.cn/intl/zh-CN/chrome/browser/" target="_blank" rel="nofollow">Google Chrome</a>、<a href = "http://firefox.com.cn/download/" target="_blank" rel="nofollow">Mozilla Firefox</a> 等浏览器。')
+                    } else {
+                        v('为保证您能顺畅体验去哪儿网的服务，建议改用 <a href = "http://www.google.cn/intl/zh-CN/chrome/browser/" target="_blank" rel="nofollow">Google Chrome</a>、<a href = "http://firefox.com.cn/download/" target="_blank" rel="nofollow">Mozilla Firefox</a> 等浏览器。')
+                    }
+                }
+            }
+            function c() {
+                var e = r(n);
+                if (e)
+                    e.onclick = function(e) {
+                        e = e || window.event;
+                        if (e.preventDefault) {
+                            e.preventDefault()
+                        } else {
+                            e.returnValue = false
+                        }
+                        h()
+                    }
+            }
+            function h() {
+                var n = r(t);
+                if (n)
+                    n.style.display = "none";
+                p(e, 1, 2592e3, "/", "qunar.com")
+            }
+            function p(e, t) {
+                var n = new Date;
+                var r = arguments
+                  , i = r.length;
+                var s = i > 2 ? r[2] : null;
+                var o = i > 3 ? r[3] : null;
+                var u = i > 4 ? r[4] : null;
+                var a = i > 5 ? r[5] : false;
+                if (s != null)
+                    n.setTime(n.getTime() + s * 1e3);
+                document.cookie = e + "=" + escape(t) + (s == null ? "" : "; expires=" + n.toGMTString()) + (o == null ? "" : "; path=" + o) + (u == null ? "" : "; domain=" + u) + (a == true ? "; secure" : "")
+            }
+            function d(e) {
+                var t = document.cookie.match(new RegExp("(^| )" + e + "=([^;]*)(;|$)"));
+                if (t != null)
+                    return unescape(t[2]);
+                return null
+            }
+            function v(e) {
+                var n = document.getElementsByTagName("body")[0];
+                var r = n.firstChild;
+                var i = document.createElement("div");
+                i.id = t;
+                i.className = "qhf_sysnotice";
+                i.innerHTML = ['<div class="qhf_sysnotice_info"><a id="up_notice_close" href="#" title="不再提示" class="qhf_sysnotice_close"></a>', e, "</div>"].join("");
+                n.insertBefore(i, r);
+                setTimeout(c, 0)
+            }
+            var e = "QN38"
+              , t = "up_notice_wrap"
+              , n = "up_notice_close";
+            var i = navigator.userAgent.toLowerCase();
+            l()
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["e5921b50a3d3d91e99b0b2807c5fc360"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "3e8f821309acd24e617dc556afa43b41",
+        filename: "home_header.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            function P(e, r, i) {
+                r = r || 1;
+                i = i || "首页";
+                c.innerHTML = "";
+                for (var s = 0; s < e.length; s++) {
+                    (function(t) {
+                        var s = e[t];
+                        var o = n("div", "q_header_sub_con " + r);
+                        var u = n("a");
+                        u.setAttribute("href", s.link);
+                        var a = n("i");
+                        var f = n("span");
+                        var l = n("span", "tagImg");
+                        a.innerHTML = s.icon;
+                        f.innerHTML = s.title;
+                        o.appendChild(u);
+                        u.appendChild(a);
+                        u.appendChild(f);
+                        u.appendChild(l);
+                        c.appendChild(o);
+                        if (s.red) {
+                            f.style.color = "#f55"
+                        }
+                        if (s.tag) {
+                            l.style.background = "url(" + s.tag + ")"
+                        }
+                        u.onclick = function() {
+                            newClkObj.nanachiClk({
+                                button_id: "3-" + r + "-" + (t + 1),
+                                button_name: i + "-" + s.title,
+                                action_type: "buttonclick",
+                                page_depth: "3-二级导航栏",
+                                to_url: this.href,
+                                logdata: ""
+                            })
+                        }
+                    }
+                    )(s)
+                }
+                var o = t("q_header_sub_mnav");
+                var u = t("q_header_mnav").offsetLeft;
+                var a = t("q_header_mnav").clientWidth;
+                var f = t("q_header_sub_mnav").clientWidth;
+                var l = 60 * (r - 1);
+                var h = (f - 60) / 2;
+                var p = u;
+                if (l - h > 0 && l - h + f < a) {
+                    p = u + l - h
+                } else if (l - h + f > a) {
+                    p = u + a - f
+                }
+                o.style.marginLeft = p + "px";
+                o.style.border = "1px solid #00BCD4";
+                o.style.boxSizing = "border-box";
+                o.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.08)"
+            }
+            function H() {
+                P(M.data);
+                var e = n("div", "q_header_sub_remark");
+                e.innerHTML = M.title;
+                var r = t("q_header_sub_con");
+                c.insertBefore(e, r);
+                var i = n("span", "q_header_sub_tran");
+                c.insertBefore(i, r);
+                var s = t("q_header_sub_mnav");
+                var o = t("q_header_mnav").offsetLeft;
+                s.style.marginLeft = o + "px";
+                s.style.border = "none";
+                s.style.boxShadow = "none"
+            }
+            var e = window.location;
+            if (!(e.host === "www.qunar.com" && (e.pathname === "/" || e.pathname.indexOf("index.htm") >= 0))) {
+                return
+            }
+            var t = function(e, t) {
+                if (document.getElementsByClassName) {
+                    return document.getElementsByClassName(e)[0]
+                } else {
+                    var n = [];
+                    var r = document.body.getElementsByTagName(t || "div");
+                    for (var i = 0; i < r.length; i++) {
+                        if (r[i].className.indexOf(e) >= 0) {
+                            n.push(r[i])
+                        }
+                    }
+                    return n[0]
+                }
+            };
+            var n = function(e, t) {
+                var n = document.createElement(e);
+                if (t) {
+                    n.setAttribute("class", t)
+                }
+                return n
+            };
+            var r = function(e) {
+                return document.getElementById(e)
+            };
+            var i = t("q_header_home")
+              , s = t("q_header_main")
+              , o = t("q_header_logo")
+              , u = t("q_header_tnav")
+              , a = t("q_header_app_logo", "a")
+              , f = t("q_header_mnav");
+            i.className += " home_header_201909_4004";
+            s.removeChild(f);
+            s.removeChild(a);
+            var l = n("div", "div_mnav qunar-assist-hide");
+            l.appendChild(f);
+            var c = n("div", "q_header_sub_mnav");
+            l.appendChild(c);
+            i.appendChild(l);
+            o.style.position = "absolute";
+            o.style.top = "36px";
+            u.style.height = "36px";
+            var h = u.children[0];
+            h.lastElementChild.className = "";
+            var p = n("li", "last wx_phone_icon qunar-assist-hide");
+            var d = n("i", "wx_icon");
+            d.innerHTML = "";
+            p.appendChild(d);
+            h.appendChild(p);
+            var v = n("div", "picture phone_picture");
+            var m = n("div", "picture wx_picture");
+            p.appendChild(v);
+            p.appendChild(m);
+            var g = n("div", "content_div");
+            v.appendChild(g);
+            var y = n("img");
+            y.setAttribute("src", "https://picbed.qunarzz.com/130abe0fc455a1a829e34d55af2c41fc.jpg");
+            g.appendChild(y);
+            var b = n("div", "words_grey");
+            b.innerHTML = "扫码下载去哪儿App";
+            g.appendChild(b);
+            var w = n("div", "get_gift");
+            w.innerHTML = "领500元新人大礼包";
+            g.appendChild(w);
+            var E = n("div", "content_div");
+            m.appendChild(E);
+            var S = n("img");
+            S.setAttribute("src", "https://picbed.qunarzz.com/3b532222b23f8bc29be8e3b06bb2edc6.jpg");
+            E.appendChild(S);
+            var x = n("div", "words_grey");
+            x.innerHTML = "关注去哪儿公众号";
+            E.appendChild(x);
+            var T = n("div", "words_grey");
+            T.innerHTML = "优惠信息即刻知晓";
+            E.appendChild(T);
+            var N = n("div", "search_input_div");
+            N.setAttribute("id", "search_input_div");
+            s.appendChild(N);
+            var C = n("div", "left_input_div");
+            N.appendChild(C);
+            var k = n("i", "icon-search");
+            k.innerHTML = "";
+            N.appendChild(k);
+            var L = n("input", "left_input");
+            L.setAttribute("placeholder", "搜索酒店/门票/机票/火车票");
+            L.setAttribute("id", "header_search_input");
+            C.appendChild(L);
+            var A = n("ul", "search_results");
+            A.setAttribute("id", "search_results_list");
+            N.appendChild(A);
+            var O = window.__QC_SEARCH_DATA.navList;
+            var M = window.__QC_SEARCH_DATA.initSubList;
+            f.innerHTML = "";
+            var _ = n("ul");
+            f.appendChild(_);
+            var D = n("div", "q_header_tags");
+            D.setAttribute("id", "__header_nav_tags__");
+            f.appendChild(D);
+            for (var B = 0; B < O.length; B++) {
+                (function(e) {
+                    var r = O[e];
+                    var i = n("li", "qheader_" + r.key);
+                    var s = n("a", "q_header_navlink");
+                    s.setAttribute("href", r.link);
+                    s.setAttribute("target", "_top");
+                    var o = n("span");
+                    var u = n("b");
+                    u.innerHTML = r.title;
+                    i.appendChild(s);
+                    s.appendChild(o);
+                    o.appendChild(u);
+                    _.appendChild(i);
+                    if (r.tag) {
+                        var a = n("img", "qtag_" + r.key);
+                        a.setAttribute("src", r.tag);
+                        a.style.left = 60 * e + 5 + "px";
+                        D.appendChild(a)
+                    }
+                    H();
+                    i.onmouseenter = function() {
+                        if (r.subNav && r.subNav.length) {
+                            P(r.subNav, e + 1, r.title)
+                        } else {
+                            H()
+                        }
+                        newClkObj.nanachiClk({
+                            button_id: "2-" + (e + 1),
+                            button_name: "一级-" + r.title,
+                            action_type: "buttonclick",
+                            page_depth: "2-一级导航栏",
+                            to_url: "",
+                            logdata: ""
+                        })
+                    }
+                    ;
+                    var f = t("q_header_sub_mnav");
+                    var l = t("div_mnav");
+                    var c = window.innerWidth;
+                    window.onresize = function() {
+                        c = window.innerWidth
+                    }
+                    ;
+                    f.onmouseenter = function() {
+                        if (!t("q_header_sub_remark")) {
+                            var e = f.children[0].className.split(" ")[1];
+                            if (c > 1200 && e) {
+                                i.parentElement.children[parseInt(e) - 1].className += " qhf_cur"
+                            } else if (c < 1200 && e) {
+                                i.parentElement.parentElement.parentElement.children[parseInt(e) - 1].className += " qhf_cur"
+                            }
+                        }
+                    }
+                    ;
+                    f.onmouseleave = function() {
+                        var e = f.children[0].className.split(" ")[1];
+                        if (c > 1200 && e) {
+                            i.parentElement.children[parseInt(e) - 1].className = "qheader_" + r.key
+                        } else if (c < 1200 && e) {
+                            i.parentElement.parentElement.parentElement.children[parseInt(e) - 1].className = "qheader_" + r.key
+                        }
+                        H()
+                    }
+                    ;
+                    l.onmouseleave = function() {
+                        H()
+                    }
+                }
+                )(B)
+            }
+            var j = n("li", "qhf_navmore");
+            j.setAttribute("id", "__header_navmore__");
+            var F = n("a", "q_header_navlink q_header_navlink_more");
+            var I = n("span");
+            var q = n("i");
+            var R = n("b");
+            R.innerHTML = "更多";
+            I.appendChild(R);
+            F.appendChild(I);
+            F.appendChild(q);
+            j.appendChild(F);
+            var U = n("div", "q_header_navmore-con");
+            U.setAttribute("id", "__header_navmore_con__");
+            j.appendChild(U);
+            _.appendChild(j);
+            _.children[0].className += " qhf_cur";
+            d.onmouseover = function() {
+                m.style.display = "block"
+            }
+            ;
+            d.onmouseout = function() {
+                m.style.display = "none"
+            }
+            ;
+            var z = n("div", "custom_div");
+            s.appendChild(z);
+            var W = n("a", "left_custom");
+            W.href = "http://help.qunar.com/#/telCustom";
+            W.target = "_blank";
+            z.appendChild(W);
+            var X = n("ul", "right_custom");
+            z.appendChild(X);
+            var V = n("i", "icon-custom");
+            W.appendChild(V);
+            var $ = n("span", "custom_24");
+            W.appendChild($);
+            $.innerHTML = "24小时";
+            V.innerHTML = "";
+            var J = [{
+                title: "国内客服",
+                num: "95117"
+            }, {
+                title: "国际客服",
+                num: "(+8610)59606999"
+            }];
+            for (var B = 0; B < J.length; B++) {
+                var K = n("li", "item_custom");
+                X.appendChild(K);
+                var Q = n("span", "item_custom_words");
+                var G = n("span", "item_custom_num");
+                Q.innerHTML = J[B].title;
+                G.innerHTML = J[B].num;
+                K.appendChild(Q);
+                K.appendChild(G)
+            }
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["3e8f821309acd24e617dc556afa43b41"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "006ecc6d032f31d7874d1d687f598d98",
+        filename: "buryingPoint.conf.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        t.exports = [{
+            floor: 1,
+            type: "header_nav",
+            id: "1",
+            children: [{
+                floor: 2,
+                mintype: "home",
+                id: "1_1"
+            }, {
+                floor: 2,
+                mintype: "flight",
+                id: "1_2"
+            }, {
+                floor: 2,
+                mintype: "hotel",
+                id: "1_3"
+            }, {
+                floor: 2,
+                mintype: "tuan",
+                id: "1_4",
+                children: [{
+                    floor: 3,
+                    name: "tuan_1",
+                    id: "1_4_1"
+                }, {
+                    floor: 3,
+                    name: "tuan_2",
+                    id: "1_4_2"
+                }, {
+                    floor: 3,
+                    name: "tuan_3",
+                    id: "1_4_3"
+                }]
+            }, {
+                floor: 2,
+                mintype: "package",
+                id: "1_5",
+                children: [{
+                    floor: 3,
+                    name: "package_1",
+                    id: "1_5_1"
+                }, {
+                    floor: 3,
+                    name: "package_2",
+                    id: "1_5_2"
+                }, {
+                    floor: 3,
+                    name: "package_3",
+                    id: "1_5_3"
+                }, {
+                    floor: 3,
+                    name: "package_4",
+                    id: "1_5_4"
+                }, {
+                    floor: 3,
+                    name: "package_5",
+                    id: "1_5_5"
+                }, {
+                    floor: 3,
+                    name: "package_6",
+                    id: "1_5_6"
+                }, {
+                    floor: 3,
+                    name: "package_7",
+                    id: "1_5_7"
+                }, {
+                    floor: 3,
+                    name: "package_8",
+                    id: "1_5_8"
+                }, {
+                    floor: 3,
+                    name: "package_9",
+                    id: "1_5_9"
+                }, {
+                    floor: 3,
+                    name: "package_10",
+                    id: "1_5_10"
+                }]
+            }, {
+                floor: 2,
+                mintype: "youlun",
+                id: "1_6"
+            }, {
+                floor: 2,
+                mintype: "piao",
+                id: "1_7",
+                children: [{
+                    floor: 3,
+                    name: "piao_1",
+                    id: "1_7_1"
+                }, {
+                    floor: 3,
+                    name: "piao_2",
+                    id: "1_7_2"
+                }, {
+                    floor: 3,
+                    name: "piao_3",
+                    id: "1_7_3"
+                }, {
+                    floor: 3,
+                    name: "piao_4",
+                    id: "1_7_4"
+                }, {
+                    floor: 3,
+                    name: "piao_5",
+                    id: "1_7_5"
+                }]
+            }, {
+                floor: 2,
+                mintype: "train",
+                id: "1_8"
+            }, {
+                floor: 2,
+                mintype: "travel",
+                id: "1_9",
+                children: [{
+                    floor: 3,
+                    name: "travel_1",
+                    id: "1_9_1"
+                }, {
+                    floor: 3,
+                    name: "travel_2",
+                    id: "1_9_2"
+                }, {
+                    floor: 3,
+                    name: "travel_3",
+                    id: "1_9_3"
+                }, {
+                    floor: 3,
+                    name: "travel_4",
+                    id: "1_9_4"
+                }, {
+                    floor: 3,
+                    name: "travel_5",
+                    id: "1_9_5"
+                }, {
+                    floor: 3,
+                    name: "travel_6",
+                    id: "1_9_6"
+                }]
+            }, {
+                floor: 2,
+                mintype: "ddr",
+                id: "1_10",
+                children: [{
+                    floor: 3,
+                    name: "ddr_1",
+                    id: "1_10_1"
+                }, {
+                    floor: 3,
+                    name: "ddr_2",
+                    id: "1_10_2"
+                }, {
+                    floor: 3,
+                    name: "ddr_3",
+                    id: "1_10_3"
+                }, {
+                    floor: 3,
+                    name: "ddr_4",
+                    id: "1_10_4"
+                }, {
+                    floor: 3,
+                    name: "ddr_5",
+                    id: "1_10_5"
+                }, {
+                    floor: 3,
+                    name: "ddr_6",
+                    id: "1_10_6"
+                }]
+            }, {
+                floor: 2,
+                mintype: "car",
+                id: "1_11",
+                children: [{
+                    floor: 3,
+                    name: "car_1",
+                    id: "1_11_1"
+                }, {
+                    floor: 3,
+                    name: "car_2",
+                    id: "1_11_2"
+                }, {
+                    floor: 3,
+                    name: "car_3",
+                    id: "1_11_3"
+                }, {
+                    floor: 3,
+                    name: "car_4",
+                    id: "1_11_4"
+                }]
+            }, {
+                floor: 2,
+                mintype: "bus",
+                id: "1_12"
+            }, {
+                floor: 2,
+                mintype: "haiwai",
+                id: "1_13"
+            }, {
+                floor: 2,
+                mintype: "card",
+                id: "1_14"
+            }]
+        }, {
+            floor: 1,
+            type: "other",
+            id: "8",
+            children: [{
+                floor: 2,
+                mintype: "user",
+                id: "8_1"
+            }, {
+                floor: 2,
+                mintype: "logout",
+                id: "8_2"
+            }, {
+                floor: 2,
+                mintype: "msg",
+                id: "8_3"
+            }, {
+                floor: 2,
+                mintype: "order",
+                id: "8_4",
+                children: [{
+                    floor: 3,
+                    name: "order_1",
+                    id: "8_4_1"
+                }, {
+                    floor: 3,
+                    name: "order_2",
+                    id: "8_4_2"
+                }, {
+                    floor: 3,
+                    name: "order_3",
+                    id: "8_4_3"
+                }, {
+                    floor: 3,
+                    name: "order_4",
+                    id: "8_4_4"
+                }, {
+                    floor: 3,
+                    name: "order_5",
+                    id: "8_4_5"
+                }, {
+                    floor: 3,
+                    name: "order_6",
+                    id: "8_4_6"
+                }, {
+                    floor: 3,
+                    name: "order_7",
+                    id: "8_4_7"
+                }, {
+                    floor: 3,
+                    name: "order_8",
+                    id: "8_4_8"
+                }, {
+                    floor: 3,
+                    name: "order_9",
+                    id: "8_4_9"
+                }, {
+                    floor: 3,
+                    name: "order_10",
+                    id: "8_4_10"
+                }, {
+                    floor: 3,
+                    name: "order_11",
+                    id: "8_4_11"
+                }, {
+                    floor: 3,
+                    name: "order_12",
+                    id: "8_4_12"
+                }, {
+                    floor: 3,
+                    name: "order_13",
+                    id: "8_4_13"
+                }]
+            }, {
+                floor: 2,
+                mintype: "jifen_shangcheng",
+                id: "8_5"
+            }, {
+                floor: 2,
+                mintype: "kefu",
+                id: "8_6"
+            }, {
+                floor: 2,
+                mintype: "adv1",
+                id: "8_7"
+            }, {
+                floor: 2,
+                mintype: "adv2",
+                id: "8_8"
+            }, {
+                floor: 2,
+                mintype: "download",
+                id: "8_9"
+            }, {
+                floor: 2,
+                mintype: "login",
+                id: "8_10"
+            }, {
+                floor: 2,
+                mintype: "register",
+                id: "8_11"
+            }]
+        }]
+    }(t.exports, t, e);
+    e.____MODULES["006ecc6d032f31d7874d1d687f598d98"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "2e853074de80879db6b3c6f8d30f877f",
+        filename: "nav.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(t, n, r) {
+        (function() {
+            var t = e.____MODULES["006ecc6d032f31d7874d1d687f598d98"];
+            mini = document.getElementById("__header_mininav__");
+            if (mini) {
+                return
+            }
+            var n = window["QNR"]["hfUtils"]
+              , r = ["package", "travel", "piao", "tuan", "ddr"]
+              , i = document.getElementById("__header_nav_tags__")
+              , s = document.getElementById("__header_navmore__")
+              , o = document.getElementById("__header_navmore_con__")
+              , u = i.children
+              , a = ""
+              , f = null
+              , l = Math.floor(Math.random() * u.length);
+            f = n.getElementsByClassName(document, "q_header_main");
+            if (f && f.length > 0) {
+                f = f[0];
+                a = f.getAttribute("data-hfchannel")
+            }
+            asideHandle = function(e) {
+                var t = document.getElementById("__header_aside_" + e + "__"), r = t && t.children || [], i, s, o, u;
+                for (var f = 0; f < r.length; f++) {
+                    if (r[f].tagName.toLowerCase() === "a") {
+                        n.bindEvent(r[f], "click", function() {
+                            n.GA.clk(e + "|" + this.innerHTML.replace(/.*<span>|<\/span>.*/gi, ""), 170)
+                        })
+                    }
+                }
+                if (!!t && a && a !== e) {
+                    u = document.getElementById("__link_" + e + "__");
+                    target = u.parentNode;
+                    fnIn = function(e) {
+                        if (!!i)
+                            clearTimeout(i);
+                        i = setTimeout(function() {
+                            u.className = u.className.replace(" q_header_hover ", "");
+                            u.className = u.className + " q_header_hover ";
+                            t.style.display = "block"
+                        }, 100);
+                        return false
+                    }
+                    ;
+                    fnOut = function(e) {
+                        if (!!i)
+                            clearTimeout(i);
+                        i = setTimeout(function() {
+                            u.className = u.className.replace(" q_header_hover ", "");
+                            t.style.display = "none"
+                        }, 100);
+                        return false
+                    }
+                    ;
+                    n.bindEvent(target, "mouseover", fnIn);
+                    n.bindEvent(target, "mouseout", fnOut);
+                    n.bindEvent(t, "mouseover", fnIn);
+                    n.bindEvent(t, "mouseout", fnOut)
+                }
+            }
+            ;
+            for (var c = 0; c < r.length; c++) {
+                asideHandle(r[c])
+            }
+            u[l] && (u[l].style.display = "block");
+            if (!!s) {
+                n.bindEvent(s, "mouseover", function() {
+                    s.className = s.className.replace(" q_header_hover ", "");
+                    s.className = s.className + " q_header_hover ";
+                    o.style.display = "block"
+                });
+                n.bindEvent(s, "mouseout", function() {
+                    s.className = s.className.replace(" q_header_hover ", "");
+                    o.style.display = "none"
+                })
+            }
+            window.displayAssistEntry = function() {
+                console.log("原方法已废弃，如需展示无障碍入口请调用新方法。")
+            }
+            ;
+            window.displayHomeAssistEntry = function() {
+                var e = document.getElementById("__loginInfo_barrier_free__");
+                if (e) {
+                    e.style.display = "inline"
+                }
+            }
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["2e853074de80879db6b3c6f8d30f877f"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "0c656b629107286007f4e2559e78c0ff",
+        filename: "orderTips.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            function e(e) {
+                return document.getElementById(e)
+            }
+            function t(e, t) {
+                if (document.documentElement.contains) {
+                    return e !== t && (e.contains ? e.contains(t) : true)
+                } else if (document.documentElement.compareDocumentPosition) {
+                    return !!(e.compareDocumentPosition(t) & 16)
+                } else {
+                    return false
+                }
+            }
+            function n(e) {
+                if (String.prototype.trim) {
+                    return e.trim()
+                }
+                return e.replace(/^\s+/, "").replace(/\s+$/, "")
+            }
+            function r(e) {
+                var t = {};
+                var r = document.cookie.split(";");
+                for (var i = 0; i < r.length; i++) {
+                    var s = r[i];
+                    var o = s.split("=");
+                    if (s.indexOf("=") != -1)
+                        t[n(o[0])] = n(o[1])
+                }
+                if (!!t[e]) {
+                    return decodeURIComponent(t[e])
+                } else {
+                    return null
+                }
+            }
+            var i = encodeURIComponent;
+            var s = "http://user.qunar.com/order/query.jsp?ret=";
+            var o = {
+                eventBind: function() {
+                    var n = e("__orderInfo_l__");
+                    var r;
+                    e("__orderInfo_b__").onmouseover = function() {
+                        n.className = "q_header_tnav_omenu q_header_tnav_omenu_hover"
+                    }
+                    ;
+                    e("__orderInfo_l__").onmouseout = function(e) {
+                        e = e || window.event;
+                        r = e.relatedTarget || e.toElement;
+                        if (r !== null && !t(this, r)) {
+                            this.className = "q_header_tnav_omenu"
+                        }
+                    }
+                },
+                updateUI: function(t) {
+                    var n = {
+                        _ele: e("__tnav_card_order__"),
+                        _href: "http://order.qunar.com/qunar_card/?t=1 ",
+                        _href1: "//user.qunar.com/passport/login.jsp?ret=http://order.qunar.com/qunar_card/?t=1"
+                    };
+                    var r = e("q_header_tnav_omenu_link");
+                    if (!!t) {
+                        r.href = "http://order.qunar.com/"
+                    }
+                    if (t) {
+                        n["_ele"].href = n["_href"]
+                    } else {
+                        n["_ele"].href = n["_href1"]
+                    }
+                    r.onclick = function() {
+                        newClkObj.nanachiClk({
+                            button_id: "13-4",
+                            button_name: "其他-查看订单",
+                            action_type: "buttonclick",
+                            page_depth: "13-其他",
+                            to_url: this.href,
+                            logdata: ""
+                        })
+                    }
+                    ;
+                    var i = e("__orderInfo_w__");
+                    var s = i.children;
+                    for (var o = 0; o < s.length; o++) {
+                        (function(e) {
+                            s[e].onclick = function() {
+                                newClkObj.nanachiClk({
+                                    button_id: "13-4-" + (e + 1),
+                                    button_name: $(s[e].children[0].children[0]).text(),
+                                    action_type: "buttonclick",
+                                    page_depth: "13-其他",
+                                    to_url: s[e].children[0].href,
+                                    logdata: ""
+                                })
+                            }
+                        }
+                        )(o)
+                    }
+                },
+                run: function() {
+                    var e = this;
+                    e.eventBind();
+                    var t = r("_q") || null;
+                    e.updateUI(t)
+                }
+            };
+            if (e("__orderInfo_l__")) {
+                o.run()
+            }
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["0c656b629107286007f4e2559e78c0ff"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "6d8e49de2a2b34f85a9135c7f7fc296d",
+        filename: "availableTrMap.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        var r = {
+            auto_58c11276: true,
+            auto_58c1128c: true,
+            auto_4e23ad93: true,
+            auto_4e23aea8: true,
+            auto_58f5807c: true,
+            auto_52b81ab2: true,
+            auto_5689de86: true,
+            auto_52b81ab1: true,
+            auto_52b81aaf: true,
+            auto_4e69d9db: true,
+            auto_4e69d9f9: true,
+            auto_4ef180cc: true,
+            auto_5abe0a1b: true,
+            auto_51502b57: true,
+            auto_58c76536: true,
+            auto_4ec1d9a4: true,
+            auto_4efe832e: true,
+            auto_1Cep1C0001: true,
+            auto_52aeaf21: true,
+            auto_5166857a: true,
+            auto_550fcb70: true,
+            auto_51668579: true,
+            auto_594270c0: true,
+            auto_5abdeb47: true,
+            auto_4f59af02: true,
+            auto_4eba55cc: true,
+            auto_1CSE1D0001: true,
+            auto_4e0d874a: true,
+            auto_4e0d8747: true,
+            auto_5187810b: true
+        };
+        t.exports = r
+    }(t.exports, t, e);
+    e.____MODULES["6d8e49de2a2b34f85a9135c7f7fc296d"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "450b2c6e3157a0b22648d48fbb5d5a66",
+        filename: "clickStatics.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(t, n, r) {
+        (function() {
+            var t = e.____MODULES["6d8e49de2a2b34f85a9135c7f7fc296d"]
+              , n = window["QNR"]["hfUtils"]["GA"]
+              , r = window["QNR"]["hfUtils"]["getCookie"];
+            var i = ["home", "flight", "hotel", "tuan", "package", "train", "travel", "gongyu", "piao", "ddr", "car", "bus", "haiwai", "card", "app", "guide", "jr", "app_navmore", "guide_navmore"];
+            i = i.concat(["hotelzt", "contact"]);
+            i = i.concat(["orderFlight", "orderHotel", "orderApartment", "orderTuan", "orderTrain", "orderPiao", "orderVacation", "orderDdr", "orderCar", "orderFlightorder"]);
+            i = i.concat(["haiwai_navmore", "card_navmore", "jr_navmore"]);
+            var s = {
+                hotelzt: "1265",
+                contact: "170"
+            };
+            var o = r("QN205")
+              , u = r("QN300")
+              , a = u || o
+              , f = t[a] ? a : "";
+            for (var l = 0, c = i.length; l < c; l++) {
+                var h = document.getElementById("__link_" + i[l] + "__");
+                if (!!h) {
+                    h.onclick = function() {
+                        try {
+                            var e, t;
+                            e = t = this.id.replace(/link|\s|_|navmore/g, "");
+                            if (f) {
+                                e = e + "|" + f
+                            }
+                            n.clk(e, s[t] || 170)
+                        } catch (r) {}
+                    }
+                }
+            }
+            var p = document.getElementById("__link_mall__"), d = document.getElementById("__link_contact__"), v, m;
+            if (p) {
+                p.href = "//www.qunar.com/site/zh/mall.shtml?bdsource=pc";
+                p.onclick = function() {
+                    newClkObj.nanachiClk({
+                        button_id: "13-5",
+                        button_name: "其他-积分商城",
+                        action_type: "buttonclick",
+                        page_depth: "13-其他",
+                        to_url: this.href,
+                        logdata: ""
+                    })
+                }
+            }
+            if (d) {
+                d.onclick = function() {
+                    newClkObj.nanachiClk({
+                        button_id: "13-6",
+                        button_name: "其他-联系客服",
+                        action_type: "buttonclick",
+                        page_depth: "13-其他",
+                        to_url: this.href,
+                        logdata: ""
+                    })
+                }
+            }
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["450b2c6e3157a0b22648d48fbb5d5a66"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "2a9e0440a8a0a31d4c1ba7f80ea5a15c",
+        filename: "messageTip.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            function A(e) {
+                if (e === "" || e === null || typeof e === "undefined") {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            function O() {
+                var e = n.getCookie("_q");
+                if (e && /^U\./.test(e)) {
+                    g = e.replace(/^U\./, "").replace(/"/g, "");
+                    n.setCookie("QN44", g, null, "/", "qunar.com")
+                }
+            }
+            function M() {
+                var e = document.getElementById("q_header_btn_message");
+                e.onclick = function() {
+                    p.clk("点击消息按钮", 1625);
+                    top.location.href = "http://user.qunar.com/index.jsp?p_message#message"
+                }
+                ;
+                n.bindEvent(y, "click", function(e) {
+                    var t = n.hasClass;
+                    var r = e.relatedTarget || e.srcElement;
+                    var i = r.parentNode;
+                    var s;
+                    if (t(r, "q_header_qm_link") || t(r, "q_header_qm_link2")) {
+                        s = i.innerText || i.textContent;
+                        p.clk(s, "1625")
+                    } else if (t(r, "qm_foote_right")) {
+                        s = r.innerText || r.textContent;
+                        p.clk(s, "1625")
+                    }
+                })
+            }
+            function _() {
+                n.bindEvent(b, "mouseover", function() {
+                    if (!n.hasClass(this.parentNode, "qm-hide-dp")) {
+                        n.addClass(y, "q_header_qm_hover");
+                        x.setAttribute("aria-hidden", "false");
+                        T.setAttribute("aria-hidden", "true")
+                    }
+                    t("onmouseover")
+                });
+                n.bindEvent(y, "mouseout", function(e) {
+                    var r = e.relatedTarget || e.toElement;
+                    if (r !== null && r !== y && !n.contains(y, r)) {
+                        n.removeClass(y, "q_header_qm_hover");
+                        x.setAttribute("aria-hidden", "ture");
+                        if (n.hasClass(y, "q_header_qm_autoshow")) {
+                            T.setAttribute("aria-hidden", "false")
+                        }
+                    }
+                    t("onmouseout")
+                });
+                n.bindEvent(C, "click", function(e) {
+                    var t = e.srcElement || e.target;
+                    if (t.className.indexOf("q_header_qm_close") >= 0) {
+                        var r = function() {
+                            n.removeClass(y, "q_header_qm_autoshow");
+                            T.setAttribute("aria-hidden", "true");
+                            X()
+                        };
+                        I(r)
+                    }
+                });
+                n.bindEvent(N, "click", function(e) {
+                    var t = e.srcElement || e.target;
+                    var r = t.getAttribute("autoshow");
+                    if ((r === false || r === "false") && t.className.indexOf("q_header_qm_link") >= 0) {
+                        var i, s, o, u, a, f;
+                        i = t.getAttribute("msgids");
+                        if (i) {
+                            u = "source=ucenter&messageIds=" + i;
+                            a = "//user.qunar.com/webapi/message/mark_read"
+                        } else {
+                            s = t.getAttribute("product");
+                            o = n.getCookie("QN44");
+                            a = "//user.qunar.com/webApi/unpayclear.jsp";
+                            u = "format=js&product=" + s + "&username=" + o
+                        }
+                        f = function(e) {
+                            if (e.ret) {
+                                P()
+                            }
+                        }
+                        ;
+                        n.jsonpCall(a, u, f)
+                    }
+                })
+            }
+            function D() {
+                y = document.getElementById("li_message");
+                if (y)
+                    return;
+                y = document.createElement("li");
+                var e = n.getElementsByClassName(document.body, "q_header_tnav")[0];
+                var t = n.getElementsByClassName(e, "q_header_tnav_omenu")[0];
+                y.className = "q_header_message qm-hide-dp qunar-assist-hide ";
+                y.id = "li_message";
+                y.innerHTML = '<div class="q_header_qm_inner" tabindex="-1"><a id="q_header_btn_message" href="http://user.qunar.com/message/list" class="q_header_message_number" aria-haspop="true"><i></i><span class="qm_text">消息</span><b class="q_header_message_count "></b><b class="q_header_qm_arrow"></b></a></div><div class="q_header_qm_dp qm_dp_autoshow" aria-hidden="true"><div class="q_header_qm_body"></div></div><div class="q_header_qm_dp q_header_qm_dp_hover" aria-hidden="true"><div class="q_header_qm_body"><div class="q_header_qm_no_msg">暂无新消息</div></div><div class="q_header_qm_footer"><a class="qm_foote_right" target="_blank" href="http://user.qunar.com/message/list">查看更多</a></div>';
+                b = n.getElementsByClassName(y, "q_header_qm_inner")[0];
+                x = n.getElementsByClassName(y, "q_header_qm_dp_hover")[0];
+                T = n.getElementsByClassName(y, "qm_dp_autoshow")[0];
+                N = n.getElementsByClassName(x, "q_header_qm_body")[0];
+                C = n.getElementsByClassName(T, "q_header_qm_body")[0];
+                t.parentNode.insertBefore(y, t)
+            }
+            function P() {
+                s = 0;
+                var e = n.getCookie("QN44");
+                if (l === 0 || v === "half" || i()) {
+                    B();
+                    if (l === 0) {
+                        j(true)
+                    } else if (v === "login") {
+                        j()
+                    }
+                    H();
+                    l += 1
+                } else {
+                    if (A(e) && v !== "half") {
+                        O()
+                    } else {
+                        s = 1;
+                        w = {
+                            total_num: 0,
+                            list: []
+                        };
+                        j(true);
+                        H();
+                        l += 1
+                    }
+                }
+                L = setTimeout(P, a * f * 1e3)
+            }
+            function H() {
+                var e = "1111222244";
+                f = e.charAt(l) || 8
+            }
+            function B() {
+                var e = d + "//user.qunar.com/webapi/message/unreadTipList";
+                var t = function(e) {
+                    if (e.ret) {
+                        w = e.data;
+                        v = w.login_status || "no";
+                        s = s ^ 1;
+                        if (s === 11) {
+                            F()
+                        }
+                    } else {
+                        v = "no"
+                    }
+                };
+                var r = "";
+                n.jsonpCall(e, r, t)
+            }
+            function j(e) {
+                var t = d + "//user.qunar.com/webApi/unpaycount.jsp";
+                var r = n.getCookie("QN44");
+                var i = "format=js&username=" + r;
+                var o = "http://user.qunar.com/order/query.jsp?ret=";
+                var a = "http%3A%2F%2Forder.qunar.com%2F";
+                var f = {
+                    hotel: {
+                        url: a + "hotel%2F%3Ffrom%3Dmyorder",
+                        name: "酒店",
+                        sort: 0,
+                        v: 1
+                    },
+                    flight: {
+                        url: "http%3A%2F%2Fflight.order.qunar.com%2Fflight",
+                        name: "机票",
+                        sort: 1,
+                        v: 0
+                    },
+                    tuan: {
+                        url: a + "group",
+                        name: "团购",
+                        sort: 2,
+                        v: 3
+                    },
+                    vacation: {
+                        url: "http%3A%2F%2Fdujia.qunar.com%2Fmyorder.jsp%3Ffrom%3Dmyorder",
+                        name: "度假",
+                        sort: 3,
+                        v: 4
+                    },
+                    train: {
+                        url: a + "train?t=1",
+                        name: "火车票",
+                        sort: 4,
+                        v: 6
+                    },
+                    piao: {
+                        url: a + "ticket?t=1",
+                        name: "门票",
+                        sort: 5,
+                        v: 5
+                    },
+                    car: {
+                        url: a + "car?t=1",
+                        name: "车车",
+                        sort: 6,
+                        v: 7
+                    },
+                    apartment: {
+                        url: a + "apartment?t=1",
+                        name: "公寓",
+                        sort: 7,
+                        v: 2
+                    },
+                    ddr: {
+                        url: a + "local?t=1",
+                        name: "当地人",
+                        sort: 8,
+                        v: 9
+                    },
+                    bus: {
+                        url: a + "bus?t=1",
+                        name: "汽车",
+                        sort: 9,
+                        v: 10
+                    },
+                    flightorder: {
+                        url: "http%3A%2F%2Ftinfo.qunar.com%2Forder%2Fmytickets%3Fcatalog%3Dmysubscribe",
+                        name: "机票预约",
+                        sort: 10,
+                        v: 8
+                    }
+                };
+                var l = function(t) {
+                    if (t.ret) {
+                        var r = t.data;
+                        if (r && typeof r === "object" && r.total > 0) {
+                            var i, a, l = r.vacation, c = r.visible;
+                            if (!!e) {
+                                E = [];
+                                for (var p in r) {
+                                    var d = r[p];
+                                    if (d > 0 && r.hasOwnProperty(p) && f.hasOwnProperty(p)) {
+                                        var v = f[p];
+                                        var m = +c[v.v];
+                                        var g = {
+                                            count: d,
+                                            autoShow: !!m,
+                                            sort: v.sort << 16 | +d.count,
+                                            url: o + v.url,
+                                            message: "个" + v.name + "订单待支付",
+                                            urlName: m ? "立即支付" : "查看",
+                                            product: p
+                                        };
+                                        E.push(g)
+                                    }
+                                }
+                            } else {
+                                if (l > 0) {
+                                    var d = Boolean(+c[4]);
+                                    E = [{
+                                        count: l,
+                                        autoShow: d,
+                                        sort: (4 << 16) + l,
+                                        url: o + f.vacation.url,
+                                        message: "个度假订单待支付",
+                                        urlName: d ? "立即支付" : "查看",
+                                        product: "vacation"
+                                    }]
+                                }
+                            }
+                            a = +r.lasttime;
+                            i = a + u - +(new Date);
+                            if (a > 0) {
+                                if (h !== a && !n.getCookie("_q")) {
+                                    n.setCookie("QN44", n.getCookie("QN44"), i / 1e3, "/", "qunar.com")
+                                }
+                            } else {
+                                h = a
+                            }
+                        } else {
+                            E = null
+                        }
+                    } else {
+                        E = null
+                    }
+                    s = s ^ 10;
+                    if (s === 11) {
+                        F()
+                    }
+                };
+                n.jsonpCall(t, i, l)
+            }
+            function F() {
+                var e, r, i, s;
+                if (E) {
+                    w = n.extend({}, {
+                        total_num: 0,
+                        other: 0,
+                        list: []
+                    }, w);
+                    for (var o = E.length - 1; o >= 0; o--) {
+                        w.total_num += E[o].count
+                    }
+                    if (!w.list) {
+                        w.list = []
+                    }
+                    w.list = w.list.concat(E)
+                }
+                if (w.hasOwnProperty("list") && w.list.length > 0) {
+                    w.list.sort(function(e, t) {
+                        return e.sort > t.sort ? 1 : -1
+                    })
+                }
+                if (typeof JSON === "object" && JSON.stringify && typeof S !== "undefined" && JSON.stringify(w) === JSON.stringify(S)) {
+                    if (m === 0 && n.hasClass(y, "q_header_qm_autoshow")) {
+                        n.removeClass(y, "q_header_qm_autoshow");
+                        T.setAttribute("aria-hidden", "true")
+                    } else if (m > 0 && !n.hasClass(y, "q_header_qm_autoshow")) {
+                        n.addClass(y, "q_header_qm_autoshow");
+                        T.setAttribute("aria-hidden", "false");
+                        U();
+                        if (e)
+                            W(e)
+                    }
+                    return
+                }
+                S = w;
+                m = J();
+                r = document.getElementById("q_header_btn_message");
+                i = r.getElementsByTagName("i")[0];
+                s = n.getElementsByClassName(r, "q_header_message_count")[0];
+                e = K();
+                n.removeClass(i, "q_header_message_red");
+                n.removeClass(s, "q_header_message_n");
+                n.removeClass(r, "q_header_message_number");
+                n.removeClass(y, "q_has_message");
+                s.innerHTML = "";
+                if (S.total_num > 0) {
+                    var u = S.list;
+                    for (var a = 0; a < u.length; a++) {
+                        var f = u[a];
+                        if (f.url === "//pay.qunar.com/member") {
+                            f.url = f.url + "/"
+                        }
+                    }
+                    n.addClass(i, "q_header_message_red");
+                    n.addClass(r, "q_header_message_number");
+                    n.addClass(y, "q_has_message");
+                    n.removeClass(y, "qm-hide-dp");
+                    if (S.total_num < 10) {
+                        s.innerHTML = S.total_num
+                    } else {
+                        s.innerHTML = "9<small>+</small>"
+                    }
+                    if (m > 0) {
+                        n.addClass(y, "q_header_qm_autoshow");
+                        T.setAttribute("aria-hidden", "false");
+                        U();
+                        W(e)
+                    } else {
+                        X();
+                        n.removeClass(y, "q_header_qm_autoshow");
+                        T.setAttribute("aria-hidden", "true")
+                    }
+                    z();
+                    M();
+                    r = null;
+                    i = null;
+                    c = 0
+                } else {
+                    n.addClass(y, "qm-hide-dp");
+                    if (S.other > 0) {
+                        n.addClass(i, "q_header_message_red")
+                    }
+                    if (c === 10) {
+                        n.setCookie("QN44", "", 0, "/", "qunar.com");
+                        h = 0
+                    }
+                    if (n.hasClass(y, "q_header_qm_autoshow")) {
+                        n.removeClass(s, "q_header_qm_autoshow");
+                        T.setAttribute("aria-hidden", "ture");
+                        X();
+                        c = 0
+                    } else {
+                        c += 1
+                    }
+                    t(c)
+                }
+                window.QNR.hfUtils.onMessageRequestComplete()
+            }
+            function I(e) {
+                q(e);
+                R(e)
+            }
+            function q(e) {
+                var t = d + "//user.qunar.com/webapi/message/hideHeaderTipListCell";
+                var r = "";
+                var i = function(t) {
+                    if (t.ret) {
+                        if (typeof e === "function" && o === 0) {
+                            e();
+                            o = 1
+                        }
+                    }
+                };
+                n.jsonpCall(t, r, i)
+            }
+            function R(e) {
+                var t = d + "//user.qunar.com/webApi/unpayclear.jsp";
+                var r = "format=js&username=" + n.getCookie("QN44");
+                var i = function(t) {
+                    if (t.ret === t.errmsg === true && o === 0) {
+                        if (typeof e === "function") {
+                            e();
+                            o = 1
+                        }
+                    }
+                };
+                n.jsonpCall(t, r, i)
+            }
+            function U() {
+                var e = S.list.length
+                  , t = 0;
+                C.innerHTML = '<a class="q_header_qm_close" title="关闭"></a>';
+                for (var n = 0; n < e; n++) {
+                    var r = S.list[n];
+                    if (t < 3 && !!r.autoShow) {
+                        var i = new $(r);
+                        t += 1;
+                        C.appendChild(i._dom)
+                    }
+                }
+            }
+            function z() {
+                N.innerHTML = "";
+                n.removeClass(y, "qm-hide-dp");
+                if (S.total_num === 0) {
+                    N.innerHTML = '<div class="q_header_qm_no_msg">暂无新消息</div>';
+                    return
+                }
+                if (S.list && S.list.length > 0) {
+                    for (var e = 0, t = S.list.length; e < t && e < 3; e++) {
+                        var r = S.list[e], i;
+                        i = new V(r);
+                        N.appendChild(i._dom)
+                    }
+                } else {
+                    n.addClass(y, "qm-hide-dp")
+                }
+            }
+            function W(e) {
+                var t = 0, n, i;
+                if (!e) {
+                    return
+                }
+                if (e <= 0) {
+                    return
+                }
+                if (k) {
+                    X()
+                }
+                n = ("" + e).length + 6;
+                i = {
+                    "-1": "【" + e + "个订单待支付】",
+                    0: "【" + (new Array(n)).join("　") + "】"
+                };
+                (function s() {
+                    t = ~t;
+                    document.title = i[t] + r;
+                    k = setTimeout(function() {
+                        s()
+                    }, 1e3)
+                }
+                )()
+            }
+            function X() {
+                clearTimeout(k);
+                document.title = r
+            }
+            function V(e) {
+                var t = this;
+                t._data = e;
+                t._dom = document.createElement("div");
+                n.addClass(this._dom, "q_header_qm_item");
+                t._dom.innerHTML = '<span class="q_header_qm_red">' + t._data.count + '</span ><span class="q_header_qm_word">' + t._data.message + '</span><a class="q_header_qm_link" target="_blank" autoshow="' + t._data.autoShow + '" product="' + (t._data.product || "") + '" ' + 'msgids="' + (t._data.msgIds ? t._data.msgIds.join(",") : "") + '" href="' + t._data.url + '">' + t._data.urlName + "</a>"
+            }
+            function $(e) {
+                var t = this;
+                t._data = e;
+                t._dom = document.createElement("div");
+                n.addClass(this._dom, "q_header_qm_item");
+                t._dom.innerHTML = '<span class="q_header_qm_red">' + e.count + '</span><span class="q_header_qm_word">' + e.message + '</span><a class="q_header_qm_link2" target="_blank" href="' + e.url + '">' + e.urlName + "</a>"
+            }
+            function J() {
+                var e = S && S.list
+                  , t = 0;
+                if (e) {
+                    for (var n = 0, r = e.length; n < r && n < 3; n++) {
+                        var i = e[n];
+                        if (i.autoShow)
+                            t += +i.count
+                    }
+                }
+                return t
+            }
+            function K() {
+                var e = S && S.list
+                  , t = 0;
+                if (e) {
+                    for (var n = e.length - 1; n >= 0; n--) {
+                        var r = e[n];
+                        if (r.urlName === "立即支付") {
+                            t += +r.count
+                        }
+                    }
+                }
+                return t
+            }
+            var e = false;
+            var t = function() {
+                if (e && typeof console != "undefined" && console.log) {
+                    console.log(arguments[0])
+                }
+            };
+            var n = window.QNR.hfUtils, r = document.title, i = function() {
+                var e = n.getCookie("QN44");
+                return !!e && !/^G\.(.+)/.test(e)
+            }, s = 0, o = 0, u = 864e5, a = 15, f = 1, l = 0, c = 0, h = 0, p = window.QNR.hfUtils.GA, d = window.location.protocol, v = "no", m = 0, g, y, b, w, E, S, x, T, N, C, k, L;
+            O();
+            D();
+            P();
+            _();
+            window.QNR.hfUtils.getMessages = B;
+            window.QNR.hfUtils.getData = P;
+            window.QNR.hfUtils.onMessageRequestComplete = function() {}
+            ;
+            window.QNR.hfUtils.dataStateCode = s;
+            n.bindEvent(y, "click", function() {
+                newClkObj.nanachiClk({
+                    button_id: "13-3",
+                    button_name: "其他-消息",
+                    action_type: "buttonclick",
+                    page_depth: "13-其他",
+                    to_url: top.location.href,
+                    logdata: ""
+                })
+            })
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["2a9e0440a8a0a31d4c1ba7f80ea5a15c"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "dab251d6cc8d4a6a651ce5d07eeeab93",
+        filename: "ctrip.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        (function() {
+            function i(e, t) {
+                window["_qheader_ctrip_callcallback"] = t;
+                var n = document.createElement("script");
+                n.src = e + "?callback=_qheader_ctrip_callcallback";
+                var r = document.getElementsByTagName("head");
+                if (r && r[0]) {
+                    r[0].appendChild(n)
+                }
+            }
+            function s() {
+                i(e, function(e) {
+                    if (e && e.u_vid) {
+                        o(e.u_vid)
+                    }
+                })
+            }
+            function o(e) {
+                var n = (new Date((new Date).getTime() + r * 24 * 3600 * 1e3)).toGMTString();
+                document.cookie = t + "=" + e + ";path=/;domain=qunar.com;expires=" + n
+            }
+            function u(e) {
+                var t, n = new RegExp("(^| )" + e + "=([^;]*)(;|$)");
+                if (t = document.cookie.match(n)) {
+                    return unescape(t[2])
+                } else {
+                    return null
+                }
+            }
+            var e = "//s.c-ctrip.com/universal-id.js";
+            var t = "QN269";
+            var n = "QN1";
+            var r = 30;
+            if (u(t) === null || u(n) === null) {
+                s()
+            }
+        }
+        )()
+    }(t.exports, t, e);
+    e.____MODULES["dab251d6cc8d4a6a651ce5d07eeeab93"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "201480ef11114e0d03c7999be1fbce32",
+        filename: "qn205.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(t, n, r) {
+        function v() {
+            var e = null;
+            if (l || c || h || p) {
+                e = g()
+            } else {
+                e = y()
+            }
+            m("qn205:" + e);
+            if (e) {
+                S(e)
+            }
+        }
+        function m(e) {}
+        function g() {
+            if (l && c) {
+                return "c=" + c + "&" + l
+            } else if (h || p) {
+                return w()
+            } else {
+                return null
+            }
+        }
+        function y() {
+            var e = "";
+            var t = document.referrer;
+            if (t === "") {
+                if (b()) {
+                    return a
+                } else {
+                    return ""
+                }
+            }
+            var n = T(t);
+            for (var r = 0; r < o.length; r++) {
+                var i = o[r];
+                if (n.indexOf(i.site) > -1) {
+                    e = i.template;
+                    if (i.extra) {
+                        var s = E(i.extra, t);
+                        e += s ? "&" + s : ""
+                    }
+                    return e
+                }
+            }
+            if (t.indexOf("qunar.com") === -1) {
+                return u
+            } else {
+                return ""
+            }
+        }
+        function b() {
+            return !qn205Cookie
+        }
+        function w() {
+            var e = "";
+            e = p ? p + "#" : "";
+            e += h ? h : "";
+            return e
+        }
+        function E(e, t) {
+            if (!t) {
+                t = window.location.href
+            }
+            e = e.replace(/[\[\]]/g, "\\$&");
+            var n = new RegExp("[?&]" + e + "(=([^&#]*)|&|#|$)")
+              , r = n.exec(t);
+            if (!r) {
+                return null
+            }
+            if (!r[2]) {
+                return ""
+            }
+            return decodeURIComponent(r[2].replace(/\+/g, " "))
+        }
+        function S(e) {
+            i.setCookieEncode("QN205", e, s, "/", ".qunar.com")
+        }
+        function x() {
+            return i.getCookie("QN205")
+        }
+        function T(e) {
+            if (!e) {
+                return null
+            }
+            return e.split("//")[1].split(/[\/\?]/)[0]
+        }
+        var i = e.____MODULES["86872605378bb90e75baf8c965514629"]
+          , s = 7 * 24 * 60 * 60
+          , o = [{
+            site: "baidu.com",
+            template: "s=baidu",
+            extra: "wd"
+        }, {
+            site: "so.com",
+            template: "s=so",
+            extra: "q"
+        }, {
+            site: "sogou.com",
+            template: "s=sogou",
+            extra: "query"
+        }, {
+            site: "google.com",
+            template: "s=google",
+            extra: "q"
+        }, {
+            site: "hao123.com",
+            template: "s=hao123"
+        }, {
+            site: "bing.com",
+            template: "s=bing",
+            extra: "q"
+        }, {
+            site: "yahoo.com",
+            template: "s=yahoo",
+            extra: "q"
+        }]
+          , u = "partner"
+          , a = "organic"
+          , f = i.getRequest()
+          , l = f["kwid"]
+          , c = f["cooperate"]
+          , h = f["ex_track"]
+          , p = f["ouid"];
+        qn205Cookie = x();
+        try {
+            v()
+        } catch (d) {
+            m(d)
+        }
+    }(t.exports, t, e);
+    e.____MODULES["201480ef11114e0d03c7999be1fbce32"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "d837a6f91667b60d3c4ec23728b1fac4",
+        filename: "qn271.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(e, t, n) {
+        function a() {
+            var e = 0
+              , t = 10;
+            var n = setInterval(function() {
+                var r = window.QDevice;
+                if (e > o) {
+                    u.state = "error";
+                    u.error();
+                    clearInterval(n);
+                    return
+                }
+                if (r) {
+                    u.state = "ready";
+                    u.ready();
+                    clearInterval(n)
+                }
+                e += t
+            }, t)
+        }
+        function f(e) {
+            u.ready = e.ready && e.ready;
+            u.error = e.error && e.error
+        }
+        function l() {
+            var e = window.QDevice;
+            if (e && typeof e.getDevice === "function") {
+                e.getDevice(function(e) {}, "qunar.com")
+            }
+        }
+        function c() {
+            if (u.state === "ready") {
+                l()
+            } else if (u.state === "loading") {
+                f({
+                    ready: function() {
+                        l()
+                    }
+                })
+            }
+        }
+        function h() {
+            var e = navigator.userAgent
+              , t = e.match(/MSIE [678].0/);
+            if (t) {
+                return true
+            }
+            if (e.indexOf("MSIE 9.0") > -1 && !window.innerWidth) {
+                return true
+            }
+            return false
+        }
+        function p(e) {
+            if (r.test(document.readyState) && document.body) {
+                e()
+            } else {
+                document.addEventListener("DOMContentLoaded", function() {
+                    e()
+                }, false)
+            }
+        }
+        var r = /complete|loaded|interactive/;
+        var i = document.createElement("script")
+          , s = function() {}
+          , o = 5e3
+          , u = {
+            state: "loading",
+            ready: s,
+            error: s
+        };
+        i.type = "text/javascript";
+        i.src = "https://rmcsdf.qunar.com/js/df.js?org_id=ucenter.login&js_type=0";
+        p(function() {
+            document.body.appendChild(i);
+            if (h()) {
+                a()
+            } else {
+                i.onload = function() {
+                    a()
+                }
+                ;
+                i.onerror = function() {
+                    u.state = "error";
+                    u.error()
+                }
+            }
+        });
+        try {
+            c()
+        } catch (d) {}
+    }(t.exports, t, e);
+    e.____MODULES["d837a6f91667b60d3c4ec23728b1fac4"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
+        id: "4faab39cf06b868b8244eea964f7d4a9",
+        filename: "qn277.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(t, n, r) {
+        function v() {
+            var e = null;
+            if (l || c || h || p) {
+                e = g()
+            } else {
+                e = y()
+            }
+            m("qn277:" + e);
+            if (e) {
+                S(e)
+            }
+        }
+        function m(e) {}
+        function g() {
+            if (l && c) {
+                return "c=" + c + "&" + l
+            } else if (h || p) {
+                return w()
+            } else {
+                return null
+            }
+        }
+        function y() {
+            var e = "";
+            var t = document.referrer;
+            if (t === "") {
+                if (b()) {
+                    return a
+                } else {
+                    return ""
+                }
+            }
+            var n = T(t);
+            for (var r = 0; r < o.length; r++) {
+                var i = o[r];
+                if (n.indexOf(i.site) > -1) {
+                    e = i.template;
+                    if (i.extra) {
+                        var s = E(i.extra, t);
+                        e += s ? "&" + s : ""
+                    }
+                    return e
+                }
+            }
+            if (t.indexOf("qunar.com") === -1) {
+                return u
+            } else {
+                return ""
+            }
+        }
+        function b() {
+            return !qn277Cookie
+        }
+        function w() {
+            var e = "";
+            e = p ? p + "#" : "";
+            e += h ? h : "";
+            return e
+        }
+        function E(e, t) {
+            if (!t) {
+                t = window.location.href
+            }
+            e = e.replace(/[\[\]]/g, "\\$&");
+            var n = new RegExp("[?&]" + e + "(=([^&#]*)|&|#|$)")
+              , r = n.exec(t);
+            if (!r) {
+                return null
+            }
+            if (!r[2]) {
+                return ""
+            }
+            return decodeURIComponent(r[2].replace(/\+/g, " "))
+        }
+        function S(e) {
+            i.setCookieEncode("QN277", e, s, "/", ".qunar.com")
+        }
+        function x() {
+            return i.getCookie("QN277")
+        }
+        function T(e) {
+            if (!e) {
+                return null
+            }
+            return e.split("//")[1].split(/[\/\?]/)[0]
+        }
+        var i = e.____MODULES["86872605378bb90e75baf8c965514629"]
+          , s = 7 * 24 * 60 * 60
+          , o = [{
+            site: "baidu.com",
+            template: "s=baidu",
+            extra: "wd"
+        }, {
+            site: "so.com",
+            template: "s=so",
+            extra: "q"
+        }, {
+            site: "sogou.com",
+            template: "s=sogou",
+            extra: "query"
+        }, {
+            site: "google.com",
+            template: "s=google",
+            extra: "q"
+        }, {
+            site: "hao123.com",
+            template: "s=hao123"
+        }, {
+            site: "bing.com",
+            template: "s=bing",
+            extra: "q"
+        }, {
+            site: "yahoo.com",
+            template: "s=yahoo",
+            extra: "q"
+        }]
+          , u = "partner"
+          , a = "organic"
+          , f = i.getRequest()
+          , l = f["kwid"]
+          , c = f["cooperate"]
+          , h = f["ex_track"]
+          , p = f["ouid"];
+        qn277Cookie = x();
+        try {
+            v()
+        } catch (d) {
+            m(d)
+        }
+    }(t.exports, t, e);
+    e.____MODULES["4faab39cf06b868b8244eea964f7d4a9"] = t.exports
+}
+)(this);
+(function(e) {
+    var t = {
         id: "7393e3bde0cacc766d44ba0a125904a8",
         filename: "seceye.js",
         exports: {}
@@ -517,3 +3388,31 @@
     e.____MODULES["7393e3bde0cacc766d44ba0a125904a8"] = t.exports
 }
 )(this);
+(function(e) {
+    var t = {
+        id: "a6b532ddf0336ef70f058572c526427c",
+        filename: "header_main.js",
+        exports: {}
+    };
+    if (!e.____MODULES) {
+        e.____MODULES = {}
+    }
+    var n = function(t, n, r) {
+        e.____MODULES["38a3e8ac70e9aefcd73025326716b77e"];
+        e.____MODULES["86872605378bb90e75baf8c965514629"];
+        e.____MODULES["1fcb6cab1b9af8edd692babcb22c7447"];
+        e.____MODULES["e5921b50a3d3d91e99b0b2807c5fc360"];
+        e.____MODULES["3e8f821309acd24e617dc556afa43b41"];
+        e.____MODULES["2e853074de80879db6b3c6f8d30f877f"];
+        e.____MODULES["0c656b629107286007f4e2559e78c0ff"];
+        e.____MODULES["450b2c6e3157a0b22648d48fbb5d5a66"];
+        e.____MODULES["2a9e0440a8a0a31d4c1ba7f80ea5a15c"];
+        e.____MODULES["dab251d6cc8d4a6a651ce5d07eeeab93"];
+        e.____MODULES["201480ef11114e0d03c7999be1fbce32"];
+        e.____MODULES["d837a6f91667b60d3c4ec23728b1fac4"];
+        e.____MODULES["4faab39cf06b868b8244eea964f7d4a9"];
+        e.____MODULES["7393e3bde0cacc766d44ba0a125904a8"]
+    }(t.exports, t, e);
+    e.____MODULES["a6b532ddf0336ef70f058572c526427c"] = t.exports
+}
+)(this)
